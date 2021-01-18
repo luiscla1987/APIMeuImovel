@@ -17,3 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::prefix('v1')->namespace('Api')->group(function () {
+
+    Route::name('real_states.')->group(function () {
+        Route::resource('real-states', 'RealStateController');
+    });
+
+    Route::name('users.')->group(function () {
+        Route::resource('users', 'UserController');
+    });
+
+    Route::name('categories.')->group(function () {
+        Route::get('categories/{id}/real-states', 'CategoryController@realState');
+        Route::resource('categories', 'CategoryController');
+    });
+});
